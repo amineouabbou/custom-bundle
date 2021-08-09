@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Nutrilionz_CustomPacks>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Nutrilionz_CustomPacks>
+    </modules>
+</config>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+ 
+<config>
+    <modules>
+        <Nutrilionz_CustomPacks>
+            <version>0.1.0</version>
+        </Nutrilionz_CustomPacks>
+    </modules>
+    <global>
+        <blocks>
+            <custompacks>
+                <class>Nutrilionz_CustomPacks_Block</class>
+            </custompacks>
+        </blocks>
+    </global>
+    <frontend>
+        <routers>
+            <Nutrilionz_CustomPacks>
+                <use>standard</use>
+                <args>
+                    <module>Nutrilionz_CustomPacks</module>
+                    <frontName>custom-packs</frontName>
+                </args>
+            </Nutrilionz_CustomPacks>
+        </routers>
+        <layout>
+            <updates>
+                <nutrilionz_custompacks>
+                    <file>nutrilionz_custompacks.xml</file>
+                </nutrilionz_custompacks>                
+            </updates>
+        </layout>
+    </frontend>    
+</config>

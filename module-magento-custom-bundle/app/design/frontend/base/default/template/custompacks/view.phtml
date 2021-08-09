@@ -1,0 +1,107 @@
+<?php
+$_product = $this->getProduct();
+$options = $this->getProductOptions();
+$parent_products = $this->getParentProducts();
+$products_tabs = $this->getProductOptions();
+$removed = array_pop($products_tabs);
+$related = $this->getRelatedProducts();
+
+
+//$options2 = $this->getParentProducts();
+//print_r($options);
+?>
+<pre>
+<?php // print_r($removed); ?>
+</pre>
+
+
+<h1>(<?php echo count($parent_products); ?>) Articles </h1>
+
+<div class="row">
+    <div class="col-sm-8">
+        <?php $i = 0; foreach($options as $option): ?>
+        <div class="item">
+            <?php $_selections = $option->getSelections(); ?>
+
+            <?php $current_product = $parent_products[$i]; ?>
+            <h2><?php echo $current_product->getName(); ?></h2>
+
+            <ul>
+                <li><?php echo $current_product->getGeneralCalories(); ?></li>
+            </ul>
+            <div><?php echo $this->getPrice($current_product); ?></div>
+            <div><img src="<?php echo $this->helper('catalog/image')->init($current_product, 'small_image')->resize(200); ?>" /></div>
+
+            <?php if(count($_selections) > 1): ?>
+            <select name="bundle_option[<?php echo $option->getOptionId(); ?>]">
+                <?php foreach($_selections as $selection): ?>
+                <option value="<?php echo $selection->getSelectionId(); ?>" ><?php echo $this->getChoices($selection->getId()) ?></option>
+                <?php endforeach; ?>
+            </select>
+            <?php endif; ?>
+        </div>
+        <?php $i++; endforeach; ?>
+    </div>
+
+
+    <div class="col-sm-4">
+        <h1><?php echo $this->getPackTotal(); ?></h1>
+        <div><?php echo $this->getPrice($_product); ?></div>
+    </div>
+</div>
+
+<section>
+    <h1>CE PACK POUR?</h1>
+    <p>Pour qui ce pack ?</p>
+
+    <div class="row">
+        <div class="col-sm-4">
+            bloc
+        </div>
+    </div>
+</section>
+
+
+<section>
+    <div class="tabs-list">
+        <ul>
+            <?php foreach($products_tabs as $product): ?>
+            <li><a href="#"><?php echo $product->getDefaultTitle(); ?></a></li>             
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <?php foreach($parent_products as $product): ?>
+    <?php if($product->getStatus() == 1): ?>
+    <div class="tab-content">
+        <h2>Informations</h2>
+        <div><?php echo $product->getDescription(); ?></div>
+    </div>
+    <?php endif; ?>
+
+    <?php endforeach; ?>
+</section>
+
+
+<?php if($related): ?>
+    <h1>Related</h1>
+
+    <?php foreach($related as $product): ?>
+    <div style="background-color:#dedede; padding:10px; margin-bottom:10px;">
+        <h1><a href="<?php echo $this->getCustomUrl($product->getId()); ?>"><?php echo $product->getName(); ?></a></h1>
+
+        <?php $associated_products = $this->getRelatedChilds($product->getId()); ?>
+
+        <div>(<?php echo count($associated_products); ?>) Articles </div>
+        <div class="price-box"><?php echo $this->getPrice($product); ?></div>
+
+        <div class="childs">
+            <ol>
+            <?php foreach($this->getRelatedChilds($product->getId()) as $item): ?>
+                <li><?php echo $item->getName(); ?></li>
+            <?php endforeach; ?>
+            </ol>
+        </div>
+    </div>
+    <?php endforeach; ?>
+<?php endif; ?>
